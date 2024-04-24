@@ -93,9 +93,15 @@ button:hover {
   background-size: 120vh;
   height: 100vh;
   width: 100vw;
-  display: flex;
   justify-content: space-evenly;
   padding: 100px 50px;
+}
+.projects div {
+  position: relative;
+}
+.in_progress {
+  display: flex;
+  justify-content: space-evenly;
 }
 .card {
   height: 400px;
