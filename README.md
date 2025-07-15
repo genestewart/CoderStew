@@ -243,8 +243,30 @@ npm run type-check
    docker-compose exec laravel-api php artisan optimize
    
    # Generate API documentation
-   docker-compose exec laravel-api php artisan l5-swagger:generate
+  docker-compose exec laravel-api php artisan l5-swagger:generate
    ```
+
+### Running on Unraid
+
+The stack can be deployed on an Unraid server using the Docker Compose plugin
+or Compose Manager UI.
+
+1. **Copy the repository** to a share such as `/mnt/user/appdata/CoderStew`.
+2. **Load the `docker-compose.yml`** in the plugin or UI and adjust volume
+   paths if desired. Typical mappings on Unraid are:
+   - `/mnt/user/appdata/CoderStew/backend` → `/var/www/html`
+   - `/mnt/user/appdata/CoderStew/frontend` → `/app`
+   - `/mnt/user/appdata/CoderStew/mongodb` → `/data/db`
+   - `/mnt/user/appdata/CoderStew/redis` → `/data`
+3. **Configure environment variables** for the `api` and `frontend` services
+   (e.g., `APP_KEY` and `VITE_API_URL`) through the Unraid UI.
+4. **Start the stack** from the plugin or by running:
+
+   ```bash
+   docker compose -f /mnt/user/appdata/CoderStew/docker-compose.yml up -d
+   ```
+
+   Access the site at `http://<unraid-ip>` once the containers are running.
 
 ## 📊 Performance Targets
 
