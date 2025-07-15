@@ -83,6 +83,8 @@ cd CoderStew
 ```bash
 cp backend/.env.example backend/.env
 ```
+The repository provides a sample configuration file at `backend/.env.example`.
+Copy it to `.env` and update the values for your local setup.
 
 Edit `backend/.env` with your configuration:
 - Database credentials
