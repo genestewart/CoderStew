@@ -267,6 +267,16 @@ npm run type-check
 
 ## 🧪 Testing
 
+Before running the test suites install the dependencies for each project:
+
+```bash
+# Backend
+cd backend && composer install
+
+# Frontend
+cd ../frontend && npm install
+```
+
 ### Backend Testing
 ```bash
 # Run all tests
