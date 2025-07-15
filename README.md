@@ -226,10 +226,10 @@ npm run type-check
 2. **Build and Deploy**
    ```bash
    # Build production images
-   docker-compose -f docker-compose.prod.yml build
-   
+   docker-compose build
+
    # Deploy
-   docker-compose -f docker-compose.prod.yml up -d
+   docker-compose up -d
    ```
 
 3. **Post-Deployment**
