@@ -1,0 +1,161 @@
+version: '3.8'
+
+services:
+  # Laravel API Backend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: coderstew_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/html
+      - ./backend/storage:/var/www/html/storage
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:YourAppKeyHere
+      - DB_CONNECTION=mongodb
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_DATABASE=coderstew
+      - MAIL_MAILER=smtp
+      - MAIL_HOST=smtp.office365.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=your-email@coderstew.com
+      - MAIL_PASSWORD=your-password
+      - MAIL_ENCRYPTION=tls
+      - MAIL_FROM_ADDRESS=noreply@coderstew.com
+      - MAIL_FROM_NAME="CoderStew"
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - coderstew_network
+
+  # Vue.js Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: coderstew_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+      - VITE_APP_NAME=CoderStew
+    depends_on:
+      - api
+    networks:
+      - coderstew_network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:6
+    container_name: coderstew_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongodb/init:/docker-entrypoint-initdb.d
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=coderstew
+    networks:
+      - coderstew_network
+
+  # Redis for Caching & Queues
+  redis:
+    image: redis:7-alpine
+    container_name: coderstew_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - coderstew_network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: coderstew_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - api
+      - frontend
+    networks:
+      - coderstew_network
+
+  # GlitchTip Error Monitoring
+  glitchtip:
+    image: glitchtip/glitchtip
+    container_name: coderstew_glitchtip
+    ports:
+      - "8080:8000"
+    environment:
+      - DATABASE_URL=postgres://glitchtip:password@postgres:5432/glitchtip
+      - SECRET_KEY=your-secret-key-here
+      - EMAIL_URL=smtp://your-email@coderstew.com:password@smtp.office365.com:587
+    depends_on:
+      - postgres
+    networks:
+      - coderstew_network
+
+  # PostgreSQL for GlitchTip
+  postgres:
+    image: postgres:15
+    container_name: coderstew_postgres
+    environment:
+      - POSTGRES_DB=glitchtip
+      - POSTGRES_USER=glitchtip
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - coderstew_network
+
+  # Listmonk Newsletter Service
+  listmonk:
+    image: listmonk/listmonk:latest
+    container_name: coderstew_listmonk
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./listmonk/config.toml:/listmonk/config.toml
+    depends_on:
+      - postgres_listmonk
+    networks:
+      - coderstew_network
+
+  # PostgreSQL for Listmonk
+  postgres_listmonk:
+    image: postgres:15
+    container_name: coderstew_postgres_listmonk
+    environment:
+      - POSTGRES_DB=listmonk
+      - POSTGRES_USER=listmonk
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_listmonk_data:/var/lib/postgresql/data
+    networks:
+      - coderstew_network
+
+volumes:
+  mongodb_data:
+  redis_data:
+  postgres_data:
+  postgres_listmonk_data:
+
+networks:
+  coderstew_network:
+    driver: bridge
