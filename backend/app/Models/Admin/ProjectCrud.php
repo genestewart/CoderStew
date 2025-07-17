@@ -16,7 +16,7 @@ class ProjectCrud extends Project
     */
 
     protected $table = 'projects';
-    protected $primaryKey = '_id';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'title',
         'slug',

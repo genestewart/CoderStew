@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Newsletter extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mongodb';
-    protected $collection = 'newsletter_subscribers';
+    protected $table = 'newsletter_subscribers';
 
     /**
      * The attributes that are mass assignable.
