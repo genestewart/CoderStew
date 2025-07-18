@@ -108,7 +108,6 @@ class ProjectCrudController extends CrudController
             'JavaScript' => 'JavaScript',
             'TypeScript' => 'TypeScript',
             'Python' => 'Python',
-            'MongoDB' => 'MongoDB',
             'MySQL' => 'MySQL',
             'PostgreSQL' => 'PostgreSQL',
             'Docker' => 'Docker',

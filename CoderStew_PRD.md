@@ -103,7 +103,7 @@ _Last updated: 2025-07-13_
 - **Front‑end:** Vue 3 + Ionic, Vite build, Pinia store.  
 - **Back‑end:** PHP 8.3 / Laravel 11 API with Sanctum & Horizon queues.  
 - **CMS:** **GlitchTip** (Docker).  
-- **Database:** MongoDB 6 replica set (Docker).  
+- **Database:** MySQL 8.0 (Docker).  
 - **Newsletter:** Self‑hosted **Listmonk**; SMTP via Microsoft 365; sending domain `mail.coderstew.com`.  
 - **Hosting:** Unraid server, Docker swarm behind Nginx reverse‑proxy (Let’s Encrypt SSL).  
 - **Auth:** Email+password, optional OAuth (Google, GitHub).  

@@ -159,7 +159,6 @@ return [
          */
         Laravel\Sanctum\SanctumServiceProvider::class,
         Laravel\Horizon\HorizonServiceProvider::class,
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
 
         /*
          * Application Service Providers...
