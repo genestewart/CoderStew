@@ -20,7 +20,7 @@ A modern, high-performance website built with Laravel 11 and Vue.js 3, featuring
 - **RESTful API**: Comprehensive API endpoints
 - **Admin Panel**: Backpack CRUD for content management
 - **Authentication**: Laravel Sanctum for API security
-- **Database**: MongoDB with Laravel MongoDB package
+- **Database**: MySQL 8.0
 - **Queue Management**: Laravel Horizon for background jobs
 - **Error Monitoring**: GlitchTip integration
 - **Performance**: Redis caching, optimized queries
@@ -29,7 +29,7 @@ A modern, high-performance website built with Laravel 11 and Vue.js 3, featuring
 ### Infrastructure
 - **Containerized**: Docker Compose setup
 - **Reverse Proxy**: Nginx with performance optimizations
-- **Database**: MongoDB for flexible data storage
+- **Database**: MySQL for relational data storage
 - **Cache**: Redis for session and application caching
 - **Monitoring**: GlitchTip for error tracking
 - **Newsletter**: Listmonk for email campaigns
@@ -49,7 +49,7 @@ A modern, high-performance website built with Laravel 11 and Vue.js 3, featuring
 ### Backend
 - **Laravel 11** - PHP web framework
 - **PHP 8.3** - Latest PHP version
-- **MongoDB** - NoSQL database
+- **MySQL** - Relational database
 - **Redis** - In-memory data store
 - **Backpack CRUD** - Admin panel
 - **Laravel Sanctum** - API authentication
@@ -256,7 +256,7 @@ or Compose Manager UI.
    paths if desired. Typical mappings on Unraid are:
    - `/mnt/user/appdata/CoderStew/backend` → `/var/www/html`
    - `/mnt/user/appdata/CoderStew/frontend` → `/app`
-   - `/mnt/user/appdata/CoderStew/mongodb` → `/data/db`
+   - `/mnt/user/appdata/CoderStew/mysql` → `/var/lib/mysql`
    - `/mnt/user/appdata/CoderStew/redis` → `/data`
 3. **Configure environment variables** for the `api` and `frontend` services
    (e.g., `APP_KEY` and `VITE_API_URL`) through the Unraid UI.
