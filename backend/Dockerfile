@@ -41,6 +41,9 @@ COPY . /var/www/html
 # Copy existing application directory permissions
 COPY --chown=coderstew:coderstew . /var/www/html
 
+RUN mkdir -p bootstrap/cache && \
+    chown -R coderstew:coderstew bootstrap/cache
+
 # Change current user to coderstew
 USER coderstew
 
