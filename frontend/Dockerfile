@@ -7,14 +7,17 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install all dependencies (including devDependencies)
+RUN npm install --no-audit --progress=false
 
 # Copy source code
 COPY . .
 
 # Build the application
 RUN npm run build
+
+# Clean up dev dependencies
+RUN npm prune --production
 
 # Production stage
 FROM nginx:alpine
